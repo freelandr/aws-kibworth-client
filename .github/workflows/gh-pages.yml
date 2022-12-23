@@ -32,4 +32,11 @@ jobs:
 
     - name: Deploy
       if: success()
-      run: aws s3 sync ./dist/kibworth-ng s3://kibworth-web
+      run: |
+        aws s3 sync ./dist/kibworth-ng s3://kibworth-web
+        aws s3 cp \
+        s3://kibworth-web s3://kibworth-web \
+        --exclude 'index.html' --exclude 'robots.txt' \ 
+        --cache-control 'max-age=604800' \
+        --metadata-directive REPLACE --acl public-read \
+        --recursive
