@@ -1,35 +1,121 @@
 <div class="container" style="margin-top: 70px;">
-  <table class="table table-hover">
+  <div class="container">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <form class="form-inline">
+          <input [(ngModel)]="searchTextFirstName" [ngModelOptions]="{standalone: true}"
+            class="form-control mb-2 mr-sm-2" type="search" placeholder="Firstname" aria-label="Search">
+          <input [(ngModel)]="searchTextLastName" [ngModelOptions]="{standalone: true}"
+            class="form-control mb-2 mr-sm-2" type="search" placeholder="Lastname" aria-label="Search">
+          <input [(ngModel)]="searchTextStreetName" [ngModelOptions]="{standalone: true}"
+            class="form-control mb-2 mr-sm-2" type="search" placeholder="Streetname" aria-label="Search">
+          <button class="btn btn-outline-success mb-2" (click)="search()">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p></p>
+  </div>
+  <table class="table table-hover table-sm">
     <thead>
       <tr>
         <th>Id</th>
-        <th>Forename</th>
-        <th>Surname</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Household</th>
+        <th>Birth Year</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let ancestor of getAncestorList()">
+      <tr *ngFor="let ancestor of getAncestorListCurrent()">
 
         <td>{{ ancestor.uuid }}</td>
         <td> {{ ancestor.CHRISTIAN_ }}</td>
         <td> {{ ancestor.SURNAME }}</td>
+        <td> {{ ancestor.HOUSEHOLD }}</td>
+        <td> {{ ancestor.BIRTH_YEAR }}</td>
         <td>
-          <button class="btn btn-primary" (click)="selectAncestor(ancestor)"> Show details</button>
+          <button class="btn btn-secondary" (click)="selectAncestor(ancestor)"> Show details</button>
         </td>
       </tr>
     </tbody>
   </table>
-  <div class="card text-center" *ngIf="selectedAncestor">
-    <div class="card-header">
-      # {{selectedAncestor.uuid}}
-    </div>
-    <div class="card-block">
-      <h4 class="card-title">{{selectedAncestor.CHRISTIAN_}} {{selectedAncestor.SURNAME}}</h4>
-      <p class="card-text">
-        {{selectedAncestor.FIRST_ADD}}
-      </p>
-    </div>
-
+  <div *ngIf="isSearch">
+    <button [disabled]="!hasPrevious()" class="btn btn-outline-dark" (click)="previous()">Previous</button>
+    <button [disabled]="!hasNext()" class="btn btn-outline-dark" (click)="next()">Next</button>
   </div>
+  <div>
+    <p></p>
+  </div>
+  <div class="row" *ngIf="selectedAncestor">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          Birth
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            Birth Year: {{selectedAncestor.BIRTH_YEAR}}
+          </p>
+          <p class="card-text">
+            Baptised At: {{selectedAncestor.BAPTISE_AT}}
+          </p>
+          <p class="card-text">
+            Age At Burial: {{selectedAncestor.BUR_AGE_AT}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          Marriage
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            Married On: {{selectedAncestor.MARR_ON}}
+          </p>
+          <p class="card-text">
+            At: {{selectedAncestor.AT}}
+          </p>
+          <p class="card-text">
+            At Church: {{selectedAncestor.AT_CHURCH}}
+          </p>
+          <p class="card-text">
+            In Presence Of: {{selectedAncestor.INPRESENCE}}
+          </p>
+          <p class="card-text">
+            Age: {{selectedAncestor.AGE}}
+          </p>
+          <p class="card-text">
+            Condition: {{selectedAncestor.CONDITION}}
+          </p>
+          <p class="card-text">
+            Profession: {{selectedAncestor.PROFESSION}}
+          </p>
+          <p class="card-text">
+            Father: {{selectedAncestor.FATHERNAME}}
+          </p>
+          <p class="card-text">
+            Father's Profession: {{selectedAncestor.FATHER_PRO}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header">
+          Burial
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            Birth Year: {{selectedAncestor.BIRTH_YEAR}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
