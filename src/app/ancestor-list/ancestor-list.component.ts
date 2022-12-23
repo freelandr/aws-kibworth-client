@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { IAncestor } from '../shared/interfaces';
 
 @Component({
   selector: 'app-ancestor-list',
@@ -8,15 +9,24 @@ import { DataService } from '../data.service';
 })
 export class AncestorListComponent implements OnInit {
 
-  ancestors;
-  selectedAncestor;
+  private ancestorList: IAncestor[];
+  selectedAncestor: IAncestor;
 
   constructor(public dataService: DataService) { }
 
   ngOnInit() {
-    this.ancestors = this.dataService.getAncestors();    
+    this.loadTopAncestors();
   }
-  public selectAncestor(ancestor){
+
+  private loadTopAncestors() {
+    this.dataService.getAncestorsTop().subscribe((ancestors: IAncestor[]) => this.ancestorList = ancestors)
+  }
+
+  public getAncestorList() {
+    return this.ancestorList;
+  }
+
+  public selectAncestor(ancestor) {
     this.selectedAncestor = ancestor;
   }
 }

@@ -9,11 +9,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let ancestor of ancestors">
+      <tr *ngFor="let ancestor of getAncestorList()">
 
         <td>{{ ancestor.uuid }}</td>
-        <td> {{ ancestor.forename }}</td>
-        <td> {{ ancestor.surname }}</td>
+        <td> {{ ancestor.CHRISTIAN_ }}</td>
+        <td> {{ ancestor.SURNAME }}</td>
         <td>
           <button class="btn btn-primary" (click)="selectAncestor(ancestor)"> Show details</button>
         </td>
@@ -21,15 +21,15 @@
     </tbody>
   </table>
   <div class="card text-center" *ngIf="selectedAncestor">
-      <div class="card-header">
-        # {{selectedAncestor.uuid}}
-      </div>
-      <div class="card-block">
-        <h4 class="card-title">{{selectedAncestor.forename}} {{selectedAncestor.surname}}</h4>
-        <p class="card-text">
-          {{selectedAncestor.birth_year}}
-        </p>    
-      </div>
-
+    <div class="card-header">
+      # {{selectedAncestor.uuid}}
     </div>
+    <div class="card-block">
+      <h4 class="card-title">{{selectedAncestor.CHRISTIAN_}} {{selectedAncestor.SURNAME}}</h4>
+      <p class="card-text">
+        {{selectedAncestor.FIRST_ADD}}
+      </p>
+    </div>
+
+  </div>
 </div>
