@@ -10,14 +10,7 @@ import { IAncestor } from './shared/interfaces';
 export class DataService {
 
   private API_SERVER: string = 'https://c71up49u6l.execute-api.us-east-1.amazonaws.com/prod/';
-  private FETCH_TOP: number = 15;
-
-  ancestors = [
-    { uuid: 1, surname: "Freeland", forename: "Richard", birth_year: "1980" },
-    { uuid: 2, surname: "Freeland", forename: "Setova", birth_year: "1982" },
-    { uuid: 3, surname: "Freeland", forename: "Catherine", birth_year: "2012" },
-    { uuid: 4, surname: "Freeland", forename: "Alexandra", birth_year: "2015" }
-  ];
+  private FETCH_TOP: number = 5;
 
   constructor(private httpClient: HttpClient) {
   }

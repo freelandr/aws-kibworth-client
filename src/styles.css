@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    /* set default font-size to 13px (bootstrap using 16) */
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+}
