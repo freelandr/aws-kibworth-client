@@ -4,9 +4,9 @@ import { HomeComponent } from './home/home.component';
 import { AncestorListComponent } from './ancestor-list/ancestor-list.component';
 
 const routes: Routes = [
-  {path:  "", pathMatch: "full", redirectTo: "home"},
-  {path: "home", component: HomeComponent},
-  {path: "contact-list", component: AncestorListComponent}  
+  { path: "", pathMatch: "full", redirectTo: "home" },
+  { path: "home", component: HomeComponent },
+  { path: "ancestor-list", component: AncestorListComponent }
 ];
 
 @NgModule({
