@@ -1,19 +1,21 @@
-<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
-  <a class="navbar-brand" style="padding-left: 15px" href="#">Kibworth Ancestry Project</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto">
-
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/home">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/contact-list">Ancestor Search</a>
-      </li>
-
-    </ul>
+<nav id="mainNavbar" class="navbar navbar-expand-md bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a routerLink="/" class="navbar-brand">Kibworth Ancestry Project</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+      (click)="collapsed = !this.collapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent" [ngClass]="{ collapse: collapsed, 'navbar-collapse': true }">
+      <!-- right nav menus -->
+      <ul class="navbar-nav ml-auto">
+        <li routerLinkActive="active" class="nav-item">
+          <a routerLink="/home" class="nav-link">Home</a>
+        </li>
+        <li routerLinkActive="active" class="nav-item">
+          <a routerLink="/contact-list" class="nav-link">Ancestor Search</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
