@@ -16,12 +16,15 @@ export class AncestorListComponent implements OnInit {
   private ancestorListNext: IAncestor[];
   private ancestorListPrevious: IAncestor[];
   selectedAncestor?: IAncestor;
+  displayStyle: string = "none";
   searchTextFirstName: string;
   searchTextLastName: string;
   searchTextStreetName: string;
   private displayIndexStart: number = 0;
   private displayIndexEnd: number = PAGE_SIZE - 1;
   isSearch: boolean = false;
+  isSearchError: boolean = false;
+  isNoDataFound: boolean = false;
 
   constructor(public dataService: DataService) { }
 
@@ -49,6 +52,8 @@ export class AncestorListComponent implements OnInit {
 
   public search() {
     this.isSearch = true;
+    this.isSearchError = false;
+    this.isNoDataFound = false;
     this.selectedAncestor = undefined;
     if (this.searchTextFirstName && this.searchTextLastName && this.searchTextStreetName) {
       this.dataService.getAncestorsByFirstnameSurname(this.searchTextFirstName, this.searchTextLastName).subscribe((ancestorsByName: IAncestor[]) => {
@@ -57,8 +62,14 @@ export class AncestorListComponent implements OnInit {
           this.ancestorListCurrent = this.ancestorList.slice(0, PAGE_SIZE);
           this.displayIndexStart = 0;
           this.displayIndexEnd = PAGE_SIZE - 1;
+        },
+          error => {
+            this.isNoDataFound = true;
+          });
+      },
+        error => {
+          this.isNoDataFound = true;
         });
-      });
     }
     else if (this.searchTextLastName && this.searchTextStreetName) {
       this.dataService.getAncestorsBySurname(this.searchTextLastName).subscribe((ancestorsByName: IAncestor[]) => {
@@ -67,8 +78,14 @@ export class AncestorListComponent implements OnInit {
           this.ancestorListCurrent = this.ancestorList.slice(0, PAGE_SIZE);
           this.displayIndexStart = 0;
           this.displayIndexEnd = PAGE_SIZE - 1;
+        },
+          error => {
+            this.isNoDataFound = true;
+          });
+      },
+        error => {
+          this.isNoDataFound = true;
         });
-      });
     }
     else if (this.searchTextFirstName && this.searchTextLastName) {
       this.dataService.getAncestorsByFirstnameSurname(this.searchTextFirstName, this.searchTextLastName).subscribe((ancestors: IAncestor[]) => {
@@ -76,7 +93,10 @@ export class AncestorListComponent implements OnInit {
         this.ancestorListCurrent = ancestors.slice(0, PAGE_SIZE);
         this.displayIndexStart = 0;
         this.displayIndexEnd = PAGE_SIZE - 1;
-      });
+      },
+        error => {
+          this.isNoDataFound = true;
+        });
     }
     else if (this.searchTextLastName) {
       this.dataService.getAncestorsBySurname(this.searchTextLastName).subscribe((ancestors: IAncestor[]) => {
@@ -84,7 +104,10 @@ export class AncestorListComponent implements OnInit {
         this.ancestorListCurrent = ancestors.slice(0, PAGE_SIZE);
         this.displayIndexStart = 0;
         this.displayIndexEnd = PAGE_SIZE - 1;
-      });
+      },
+        error => {
+          this.isNoDataFound = true;
+        });
     }
     else if (this.searchTextStreetName) {
       this.dataService.getAncestorsByAddress(this.searchTextStreetName).subscribe((ancestors: IAncestor[]) => {
@@ -92,7 +115,13 @@ export class AncestorListComponent implements OnInit {
         this.ancestorListCurrent = ancestors.slice(0, PAGE_SIZE);
         this.displayIndexStart = 0;
         this.displayIndexEnd = PAGE_SIZE - 1;
-      });
+      },
+        error => {
+          this.isNoDataFound = true;
+        });
+    }
+    else {
+      this.isSearchError = true;
     }
   }
 
@@ -118,8 +147,13 @@ export class AncestorListComponent implements OnInit {
 
   public selectAncestor(selection) {
     this.dataService.getAncestor(selection.uuid).subscribe((ancestor: IAncestor) => {
+      this.displayStyle = "block";
       this.selectedAncestor = ancestor;
     });
+  }
+
+  public closePopup() {
+    this.displayStyle = "none";
   }
 
   private getAncestorListIntersect(ancestorsByName, ancestorsByAddress) {
