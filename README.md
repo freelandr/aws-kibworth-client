@@ -1,6 +1,6 @@
 # Kibworth Web App
 
-This repository contains the resources associated with the web application for the [Kibworth Ancestry Project](http://kibworth-web.s3-website-us-east-1.amazonaws.com/).
+This repository contains the web application for the [Kibworth Ancestry Project](http://kibworth-web.s3-website-us-east-1.amazonaws.com/).
 
 ## Build and run
 
