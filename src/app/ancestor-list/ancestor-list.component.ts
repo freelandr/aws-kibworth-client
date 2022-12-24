@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { IAncestor } from '../shared/interfaces';
 
@@ -59,9 +59,7 @@ export class AncestorListComponent implements OnInit {
       this.dataService.getAncestorsByFirstnameSurname(this.searchTextFirstName, this.searchTextLastName).subscribe((ancestorsByName: IAncestor[]) => {
         this.dataService.getAncestorsByAddress(this.searchTextStreetName).subscribe((ancestorsByAddress: IAncestor[]) => {
           this.ancestorList = this.getAncestorListIntersect(ancestorsByName, ancestorsByAddress);
-          this.ancestorListCurrent = this.ancestorList.slice(0, PAGE_SIZE);
-          this.displayIndexStart = 0;
-          this.displayIndexEnd = PAGE_SIZE - 1;
+          this.resetSearchResults(this.ancestorList);
         },
           error => {
             this.isNoDataFound = true;
@@ -75,9 +73,7 @@ export class AncestorListComponent implements OnInit {
       this.dataService.getAncestorsBySurname(this.searchTextLastName).subscribe((ancestorsByName: IAncestor[]) => {
         this.dataService.getAncestorsByAddress(this.searchTextStreetName).subscribe((ancestorsByAddress: IAncestor[]) => {
           this.ancestorList = this.getAncestorListIntersect(ancestorsByName, ancestorsByAddress);
-          this.ancestorListCurrent = this.ancestorList.slice(0, PAGE_SIZE);
-          this.displayIndexStart = 0;
-          this.displayIndexEnd = PAGE_SIZE - 1;
+          this.resetSearchResults(this.ancestorList);
         },
           error => {
             this.isNoDataFound = true;
@@ -90,9 +86,7 @@ export class AncestorListComponent implements OnInit {
     else if (this.searchTextFirstName && this.searchTextLastName) {
       this.dataService.getAncestorsByFirstnameSurname(this.searchTextFirstName, this.searchTextLastName).subscribe((ancestors: IAncestor[]) => {
         this.ancestorList = ancestors;
-        this.ancestorListCurrent = ancestors.slice(0, PAGE_SIZE);
-        this.displayIndexStart = 0;
-        this.displayIndexEnd = PAGE_SIZE - 1;
+        this.resetSearchResults(ancestors);
       },
         error => {
           this.isNoDataFound = true;
@@ -101,9 +95,7 @@ export class AncestorListComponent implements OnInit {
     else if (this.searchTextLastName) {
       this.dataService.getAncestorsBySurname(this.searchTextLastName).subscribe((ancestors: IAncestor[]) => {
         this.ancestorList = ancestors;
-        this.ancestorListCurrent = ancestors.slice(0, PAGE_SIZE);
-        this.displayIndexStart = 0;
-        this.displayIndexEnd = PAGE_SIZE - 1;
+        this.resetSearchResults(ancestors);
       },
         error => {
           this.isNoDataFound = true;
@@ -112,9 +104,7 @@ export class AncestorListComponent implements OnInit {
     else if (this.searchTextStreetName) {
       this.dataService.getAncestorsByAddress(this.searchTextStreetName).subscribe((ancestors: IAncestor[]) => {
         this.ancestorList = ancestors;
-        this.ancestorListCurrent = ancestors.slice(0, PAGE_SIZE);
-        this.displayIndexStart = 0;
-        this.displayIndexEnd = PAGE_SIZE - 1;
+        this.resetSearchResults(ancestors);
       },
         error => {
           this.isNoDataFound = true;
@@ -123,6 +113,12 @@ export class AncestorListComponent implements OnInit {
     else {
       this.isSearchError = true;
     }
+  }
+
+  private resetSearchResults(ancestors: IAncestor[]) {
+    this.ancestorListCurrent = ancestors.slice(0, PAGE_SIZE);
+    this.displayIndexStart = 0;
+    this.displayIndexEnd = PAGE_SIZE - 1;
   }
 
   public next() {
